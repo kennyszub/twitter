@@ -11,6 +11,7 @@
 #import "TwitterClient.h"
 #import "User.h"
 #import "Tweet.h"
+#import "TweetsViewController.h"
 
 @interface AppDelegate ()
 
@@ -21,11 +22,41 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
+    
+    // setup logout observer
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(userDidLogout) name:UserDidLogoutNotification object:nil];
+
+    
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
-    self.window.rootViewController = [[LoginViewController alloc] init];
+    
+    UINavigationController *nvc;
+    User *user = [User currentUser];
+    if (user != nil) {
+        NSLog(@"Welcome %@", user.name);
+        TweetsViewController *tvc = [[TweetsViewController alloc] init];
+        nvc = [[UINavigationController alloc] initWithRootViewController:tvc];
+    } else {
+        NSLog(@"Not logged in");
+        LoginViewController *lvc = [[LoginViewController alloc] init];
+        nvc = [[UINavigationController alloc] initWithRootViewController:lvc];
+    }
+    self.window.rootViewController = nvc;
     [self.window makeKeyAndVisible];
     
+    // set navigation bar colors
+    [[UINavigationBar appearance] setBarTintColor:[[UIColor alloc] initWithRed:85/255.0 green:172/255.0 blue:238/255.0 alpha:1.0]];
+    [[UINavigationBar appearance] setTintColor:[UIColor whiteColor]];
+    [[UINavigationBar appearance] setTitleTextAttributes:
+     [NSDictionary dictionaryWithObjectsAndKeys:
+      [UIColor whiteColor], NSForegroundColorAttributeName, nil]];
+    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
+    
     return YES;
+}
+
+- (void)userDidLogout {
+    // TODO with animation
+    self.window.rootViewController = [[LoginViewController alloc] init];
 }
 
 - (void)applicationWillResignActive:(UIApplication *)application {

@@ -1,40 +1,43 @@
 //
-//  LoginViewController.m
+//  TweetsViewController.m
 //  Twitter
 //
-//  Created by Ken Szubzda on 2/19/15.
+//  Created by Ken Szubzda on 2/21/15.
 //  Copyright (c) 2015 Ken Szubzda. All rights reserved.
 //
 
-#import "LoginViewController.h"
-#import "TwitterClient.h"
 #import "TweetsViewController.h"
+#import "User.h"
+#import "TwitterClient.h"
+#import "Tweet.h"
 
-@interface LoginViewController ()
+@interface TweetsViewController ()
 
 @end
 
-@implementation LoginViewController
-- (IBAction)onLogin:(id)sender {
-    [[TwitterClient sharedInstance] loginWithCompletion:^(User *user, NSError *error) {
-        if (user != nil) {
-            // Modally present tweets view
-            NSLog(@"welcome to %@", user.name);
-            [self presentViewController:[[TweetsViewController alloc] init] animated:YES completion:nil];
-        } else {
-            // present error view
-        }
-    }];
-}
+@implementation TweetsViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
+    self.navigationItem.title = @"Home";
+    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Sign Out" style:UIBarButtonItemStylePlain target:self action:@selector(onLogout)];
+    
+    // TODO put this in the Tweet model
+    [[TwitterClient sharedInstance] homeTimelineWithParams:nil completion:^(NSArray *tweets, NSError *error) {
+        for (Tweet *tweet in tweets) {
+            NSLog(@"test: @%@", tweet.text);
+        }
+    }];
 }
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+- (void)onLogout {
+    [User logout];
 }
 
 /*
