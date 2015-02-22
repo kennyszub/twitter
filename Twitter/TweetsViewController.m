@@ -13,6 +13,7 @@
 #import "TweetCell.h"
 #import "UIScrollView+SVPullToRefresh.h"
 #import "UIScrollView+SVInfiniteScrolling.h"
+#import "ComposeTweetController.h"
 
 @interface TweetsViewController () <UITableViewDataSource, UITableViewDelegate>
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
@@ -34,7 +35,9 @@
     
     // setup nav bar
     self.navigationItem.title = @"Home";
+
     self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Sign Out" style:UIBarButtonItemStylePlain target:self action:@selector(onLogout)];
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"compose"] style:UIBarButtonItemStylePlain target:self action:@selector(onCompose)];
     
     // get tweets
     [[TwitterClient sharedInstance] homeTimelineWithParams:nil completion:^(NSMutableArray *tweets, NSError *error) {
@@ -64,6 +67,13 @@
 
 
 #pragma mark - Private methods
+
+- (void)onCompose {
+    ComposeTweetController *ctc = [[ComposeTweetController alloc] init];
+    
+    UINavigationController *nvc = [[UINavigationController alloc] initWithRootViewController:ctc];
+    [self presentViewController:nvc animated:YES completion:nil];
+}
 
 - (void)onRefresh {
     Tweet *newestTweet = self.tweets[0];
