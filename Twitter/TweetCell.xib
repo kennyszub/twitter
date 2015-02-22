@@ -123,9 +123,11 @@
                 </constraints>
             </tableViewCellContentView>
             <connections>
+                <outlet property="favoritesButton" destination="o2f-Yb-O7R" id="ppo-Ty-ROm"/>
                 <outlet property="favoritesCount" destination="yVi-OH-r79" id="YlT-vs-Faa"/>
                 <outlet property="handleLabel" destination="8Aa-oy-Hig" id="VS2-FY-xgJ"/>
                 <outlet property="nameLabel" destination="uLY-B1-qFs" id="Wn5-MM-eX5"/>
+                <outlet property="retweetButton" destination="WJq-lk-zQj" id="C1i-TH-VFD"/>
                 <outlet property="retweetsCount" destination="bcm-OJ-Ljw" id="yJV-nl-fag"/>
                 <outlet property="thumbImageView" destination="ZVJ-am-Sc9" id="eq0-mw-Fp1"/>
                 <outlet property="timestampLabel" destination="m3E-hY-Efw" id="bPv-pW-uop"/>
