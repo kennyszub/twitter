@@ -16,6 +16,8 @@
 @property (weak, nonatomic) IBOutlet UILabel *handleLabel;
 @property (weak, nonatomic) IBOutlet UILabel *timestampLabel;
 @property (weak, nonatomic) IBOutlet UILabel *tweetLabel;
+@property (weak, nonatomic) IBOutlet UILabel *retweetsCount;
+@property (weak, nonatomic) IBOutlet UILabel *favoritesCount;
 
 @end
 
@@ -43,9 +45,27 @@
     self.handleLabel.text = [NSString stringWithFormat:@"@%@", user.screenName];
     self.tweetLabel.text = tweet.text;
     
+    if (tweet.retweetsCount > 0) {
+        self.retweetsCount.text = [@(tweet.retweetsCount) stringValue];
+    } else {
+        self.retweetsCount.text = @"";
+    }
+    if (tweet.favoritesCount > 0) {
+        self.favoritesCount.text = [@(tweet.favoritesCount) stringValue];
+    } else {
+        self.favoritesCount.text = @"";
+    }
+    
     NSDate *timeAgoDate = [NSDate dateWithTimeIntervalSinceNow:tweet.createdAt.timeIntervalSinceNow];
     self.timestampLabel.text = timeAgoDate.shortTimeAgoSinceNow;
 }
 
+- (IBAction)onRetweet:(id)sender {
+    
+}
+
+- (IBAction)onFavorite:(id)sender {
+    
+}
 
 @end

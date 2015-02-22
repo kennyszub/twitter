@@ -65,17 +65,6 @@ NSString * const kTwitterBaseUrl = @"https://api.twitter.com";
             self.loginCompletion(nil, error);
         }];
         
-        // TODO remove: not part of login process
-//        [[TwitterClient sharedInstance] GET:@"1.1/statuses/home_timeline.json" parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
-//            //            NSLog(@"tweets: %@", responseObject);
-//            NSArray *tweets = [Tweet tweetsWithArray:responseObject];
-//            for (Tweet *tweet in tweets) {
-//                NSLog(@"tweet: %@, created: %@", tweet.text, tweet.createdAt);
-//            }
-//        } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-//            NSLog(@"error getting tweets");
-//        }];
-        
     } failure:^(NSError *error) {
         NSLog(@"failed to get the access token!");
     }];
@@ -91,4 +80,14 @@ NSString * const kTwitterBaseUrl = @"https://api.twitter.com";
         completion(nil, error);
     }];
 }
+
+- (void)favoriteTweet:(NSInteger)tweetId {
+    NSDictionary *params = @{@"id" : @(tweetId)};
+    [self POST:@"1.1/favorites/create.json" parameters:params success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        NSLog(@"successfully favorited");
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        NSLog(@"failed to favorite");
+    }];
+}
+
 @end
