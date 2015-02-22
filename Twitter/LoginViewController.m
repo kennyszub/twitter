@@ -29,6 +29,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    [self.navigationController.navigationBar setBarStyle:UIBarStyleBlack];
     // Do any additional setup after loading the view from its nib.
 }
 

@@ -34,8 +34,8 @@
     self.tableView.rowHeight = UITableViewAutomaticDimension;
     
     // setup nav bar
+    [self.navigationController.navigationBar setBarStyle:UIBarStyleBlack];
     self.navigationItem.title = @"Home";
-
     self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Sign Out" style:UIBarButtonItemStylePlain target:self action:@selector(onLogout)];
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"compose"] style:UIBarButtonItemStylePlain target:self action:@selector(onCompose)];
     
