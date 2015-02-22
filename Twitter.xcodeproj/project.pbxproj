@@ -129,11 +129,11 @@
 				C4E836B01A97177E00379975 /* Models */,
 				C4E836861A965DE200379975 /* AppDelegate.h */,
 				C4E836871A965DE200379975 /* AppDelegate.m */,
+				C4E836AD1A970C7500379975 /* TwitterClient.h */,
+				C4E836AE1A970C7500379975 /* TwitterClient.m */,
 				C4E8368F1A965DE300379975 /* Images.xcassets */,
 				C4E836911A965DE300379975 /* LaunchScreen.xib */,
 				C4E836821A965DE200379975 /* Supporting Files */,
-				C4E836AD1A970C7500379975 /* TwitterClient.h */,
-				C4E836AE1A970C7500379975 /* TwitterClient.m */,
 			);
 			path = Twitter;
 			sourceTree = "<group>";

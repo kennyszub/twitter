@@ -10,8 +10,13 @@
 #import "User.h"
 #import "TwitterClient.h"
 #import "Tweet.h"
+#import "TweetCell.h"
+#import "UIScrollView+SVPullToRefresh.h"
+#import "UIScrollView+SVInfiniteScrolling.h"
 
-@interface TweetsViewController ()
+@interface TweetsViewController () <UITableViewDataSource, UITableViewDelegate>
+@property (weak, nonatomic) IBOutlet UITableView *tableView;
+@property (strong, nonatomic) NSMutableArray *tweets;
 
 @end
 
@@ -20,14 +25,34 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
+    
+    // setup tableview
+    self.tableView.delegate = self;
+    self.tableView.dataSource = self;
+    [self.tableView registerNib:[UINib nibWithNibName:@"TweetCell" bundle:nil] forCellReuseIdentifier:@"TweetCell"];
+    self.tableView.rowHeight = UITableViewAutomaticDimension;
+    
+    // setup nav bar
     self.navigationItem.title = @"Home";
     self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Sign Out" style:UIBarButtonItemStylePlain target:self action:@selector(onLogout)];
     
-    // TODO put this in the Tweet model
-    [[TwitterClient sharedInstance] homeTimelineWithParams:nil completion:^(NSArray *tweets, NSError *error) {
-        for (Tweet *tweet in tweets) {
-            NSLog(@"test: @%@", tweet.text);
-        }
+    // get tweets
+    [[TwitterClient sharedInstance] homeTimelineWithParams:nil completion:^(NSMutableArray *tweets, NSError *error) {
+        self.tweets = tweets;
+        [self.tableView reloadData];
+    }];
+}
+
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+
+    [self.tableView addPullToRefreshWithActionHandler:^{
+        [self onRefresh];
+        [self.tableView.pullToRefreshView stopAnimating];
+    }];
+    
+    [self.tableView addInfiniteScrollingWithActionHandler:^{
+        [self onInfiniteScroll];
     }];
 }
 
@@ -36,18 +61,64 @@
     // Dispose of any resources that can be recreated.
 }
 
+
+
+#pragma mark - Private methods
+
+- (void)onRefresh {
+    Tweet *newestTweet = self.tweets[0];
+    NSDictionary *params = [NSDictionary dictionaryWithObject:@(newestTweet.tweetId) forKey:@"since_id"];
+
+    [[TwitterClient sharedInstance] homeTimelineWithParams:params completion:^(NSMutableArray *tweets, NSError *error) {
+        if (tweets && tweets.count > 0) {
+            NSIndexSet *indexes = [NSIndexSet indexSetWithIndexesInRange:NSMakeRange(0, tweets.count)];
+            [self.tweets insertObjects:tweets atIndexes:indexes];
+            [self.tableView reloadData];
+        }        
+    }];
+}
+
+- (void)onInfiniteScroll {
+    Tweet *oldestTweet = self.tweets[self.tweets.count - 1];
+    
+    NSDictionary *params = [NSDictionary dictionaryWithObject:@(oldestTweet.tweetId - 1) forKey:@"max_id"];
+
+    [[TwitterClient sharedInstance] homeTimelineWithParams:params completion:^(NSMutableArray *tweets, NSError *error) {
+        if (tweets && tweets.count > 0) {
+            [self.tweets addObjectsFromArray:tweets];
+            [self.tableView reloadData];
+        }
+        [self.tableView.infiniteScrollingView stopAnimating];
+    }];
+}
+
 - (void)onLogout {
     [User logout];
 }
 
-/*
-#pragma mark - Navigation
+#pragma mark - Table view methods
 
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+    return self.tweets.count;
 }
-*/
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    TweetCell *cell = [self.tableView dequeueReusableCellWithIdentifier:@"TweetCell" forIndexPath:indexPath];
+    cell.tweet = self.tweets[indexPath.row];
+    
+    return cell;
+}
+
+- (CGFloat)tableView:(UITableView *)tableView estimatedHeightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    return UITableViewAutomaticDimension;
+}
+
+//- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+//    [self.tableView deselectRowAtIndexPath:indexPath animated:YES];
+//    BusinessDetailsController *bc = [[BusinessDetailsController alloc] init];
+//    bc.business = self.businesses[indexPath.row];
+//    [self.navigationController pushViewController:bc animated:YES];
+//}
+
 
 @end

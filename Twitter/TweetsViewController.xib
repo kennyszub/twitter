@@ -6,6 +6,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="TweetsViewController">
             <connections>
+                <outlet property="tableView" destination="Gbg-Tg-UaD" id="5ee-z3-TcN"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
@@ -13,7 +14,19 @@
         <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT">
             <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="Gbg-Tg-UaD">
+                    <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                </tableView>
+            </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+            <constraints>
+                <constraint firstAttribute="trailing" secondItem="Gbg-Tg-UaD" secondAttribute="trailing" id="1Sq-3P-McL"/>
+                <constraint firstAttribute="bottom" secondItem="Gbg-Tg-UaD" secondAttribute="bottom" id="FJA-kw-ihE"/>
+                <constraint firstItem="Gbg-Tg-UaD" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="wuD-Yl-pYn"/>
+                <constraint firstItem="Gbg-Tg-UaD" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="zmH-8V-hTw"/>
+            </constraints>
             <point key="canvasLocation" x="920" y="605"/>
         </view>
     </objects>

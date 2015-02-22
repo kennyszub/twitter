@@ -14,9 +14,10 @@
 @property (nonatomic, strong) NSString *text;
 @property (nonatomic, strong) NSDate *createdAt;
 @property (nonatomic, strong) User *user;
+@property (nonatomic, assign) NSInteger tweetId;
 
 - (id)initWithDictionary:(NSDictionary *)dictionary;
 
-+ (NSArray *)tweetsWithArray:(NSArray *)array;
++ (NSMutableArray *)tweetsWithArray:(NSArray *)array;
 
 @end

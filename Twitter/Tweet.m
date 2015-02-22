@@ -7,6 +7,7 @@
 //
 
 #import "Tweet.h"
+#import "TwitterClient.h"
 
 @implementation Tweet
 
@@ -15,6 +16,7 @@
     if (self) {
         self.user = [[User alloc] initWithDictionary:dictionary[@"user"]];
         self.text = dictionary[@"text"];
+        self.tweetId = [dictionary[@"id"] integerValue];
         
         NSString *createdAtString = dictionary[@"created_at"];
         NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
@@ -25,7 +27,7 @@
     
 }
 
-+ (NSArray *)tweetsWithArray:(NSArray *)array {
++ (NSMutableArray *)tweetsWithArray:(NSArray *)array {
     NSMutableArray *tweets = [NSMutableArray array];
     for (NSDictionary *dictionary in array) {
         [tweets addObject:[[Tweet alloc] initWithDictionary:dictionary]];
