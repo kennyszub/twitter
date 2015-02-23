@@ -73,6 +73,8 @@
         } else {
             self.textView.text = [NSString stringWithFormat:@"@%@ ", self.replyToTweet.user.screenName];
         }
+        self.charCountLabel.text = [@((NSInteger)(140 - self.textView.text.length)) stringValue];
+        self.sendTweetButton.enabled = YES;
     }
 }
 
