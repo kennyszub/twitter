@@ -8,6 +8,7 @@
 
 #import "BDBOAuth1RequestOperationManager.h"
 #import "User.h"
+#import "Tweet.h"
 
 @interface TwitterClient : BDBOAuth1RequestOperationManager
 
@@ -21,5 +22,8 @@
 - (void)unfavoriteTweet:(NSInteger)tweetId;
 - (void)retweetTweet:(NSInteger)tweetId completion:(void (^)(NSInteger retweetId, NSError *error))completion;
 - (void)unRetweetTweet:(NSInteger)tweetId completion:(void (^)(NSError *error))completion;
+- (void)createTweetWithTweet:(NSString *)tweet params:(NSDictionary *)params completion:(void (^)(Tweet *tweet, NSError *))completion;
+
+
 
 @end

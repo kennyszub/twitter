@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		82F91AD26E6F261CD041BE34 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D13B5C2ECFBFC8CE2CBD03C5 /* libPods.a */; };
+		C4CF5B6C1A9AB67F00C89D2E /* UIImage+Util.m in Sources */ = {isa = PBXBuildFile; fileRef = C4CF5B6B1A9AB67F00C89D2E /* UIImage+Util.m */; };
 		C4E836851A965DE200379975 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = C4E836841A965DE200379975 /* main.m */; };
 		C4E836881A965DE200379975 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = C4E836871A965DE200379975 /* AppDelegate.m */; };
 		C4E836901A965DE300379975 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C4E8368F1A965DE300379975 /* Images.xcassets */; };
@@ -40,6 +41,8 @@
 
 /* Begin PBXFileReference section */
 		37670910B3B1691022DD7F15 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
+		C4CF5B6A1A9AB67F00C89D2E /* UIImage+Util.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+Util.h"; sourceTree = "<group>"; };
+		C4CF5B6B1A9AB67F00C89D2E /* UIImage+Util.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+Util.m"; sourceTree = "<group>"; };
 		C4E8367F1A965DE200379975 /* Twitter.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Twitter.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C4E836831A965DE200379975 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		C4E836841A965DE200379975 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -111,6 +114,15 @@
 			name = Pods;
 			sourceTree = "<group>";
 		};
+		C4CF5B6D1A9AB68500C89D2E /* Categories */ = {
+			isa = PBXGroup;
+			children = (
+				C4CF5B6A1A9AB67F00C89D2E /* UIImage+Util.h */,
+				C4CF5B6B1A9AB67F00C89D2E /* UIImage+Util.m */,
+			);
+			name = Categories;
+			sourceTree = "<group>";
+		};
 		C4E836761A965DE200379975 = {
 			isa = PBXGroup;
 			children = (
@@ -134,6 +146,7 @@
 		C4E836811A965DE200379975 /* Twitter */ = {
 			isa = PBXGroup;
 			children = (
+				C4CF5B6D1A9AB68500C89D2E /* Categories */,
 				C4E836FF1A99435400379975 /* Views */,
 				C4E836FE1A99434200379975 /* ViewControllers */,
 				C4E836B01A97177E00379975 /* Models */,
@@ -354,6 +367,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				C4E836AF1A970C7500379975 /* TwitterClient.m in Sources */,
+				C4CF5B6C1A9AB67F00C89D2E /* UIImage+Util.m in Sources */,
 				C4E836881A965DE200379975 /* AppDelegate.m in Sources */,
 				C4E836B61A9717A200379975 /* User.m in Sources */,
 				C4E836B31A97179500379975 /* Tweet.m in Sources */,

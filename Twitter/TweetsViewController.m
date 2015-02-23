@@ -15,7 +15,7 @@
 #import "UIScrollView+SVInfiniteScrolling.h"
 #import "ComposeTweetController.h"
 
-@interface TweetsViewController () <UITableViewDataSource, UITableViewDelegate>
+@interface TweetsViewController () <UITableViewDataSource, UITableViewDelegate, ComposeTweetControllerDelegate>
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (strong, nonatomic) NSMutableArray *tweets;
 
@@ -37,7 +37,7 @@
     [self.navigationController.navigationBar setBarStyle:UIBarStyleBlack];
     self.navigationItem.title = @"Home";
     self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Sign Out" style:UIBarButtonItemStylePlain target:self action:@selector(onLogout)];
-    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"compose"] style:UIBarButtonItemStylePlain target:self action:@selector(onCompose)];
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCompose target:self action:@selector(onCompose)];
     
     // get tweets
     [[TwitterClient sharedInstance] homeTimelineWithParams:nil completion:^(NSMutableArray *tweets, NSError *error) {
@@ -70,7 +70,7 @@
 
 - (void)onCompose {
     ComposeTweetController *ctc = [[ComposeTweetController alloc] init];
-    
+    ctc.delegate = self;
     UINavigationController *nvc = [[UINavigationController alloc] initWithRootViewController:ctc];
     [self presentViewController:nvc animated:YES completion:nil];
 }
@@ -104,6 +104,17 @@
 
 - (void)onLogout {
     [User logout];
+}
+
+- (void)composeTweetController:(ComposeTweetController *)composeTweetController didSendTweet:(NSString *)tweet {
+    [[TwitterClient sharedInstance] createTweetWithTweet:tweet params:nil completion:^(Tweet *tweet, NSError *error) {
+        if (error == nil) {
+            [self.tweets insertObject:tweet atIndex:0];
+            [self.tableView reloadData];
+        } else {
+            NSLog(@"%@", error);
+        }
+    }];
 }
 
 #pragma mark - Table view methods
