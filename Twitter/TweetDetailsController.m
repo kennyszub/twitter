@@ -10,8 +10,9 @@
 #import "UIImageView+AFNetworking.h"
 #import "DateTools.h"
 #import "TwitterClient.h"
+#import "ComposeTweetController.h"
 
-@interface TweetDetailsController ()
+@interface TweetDetailsController () <ComposeTweetControllerDelegate>
 @property (weak, nonatomic) IBOutlet UIImageView *thumbnailView;
 @property (weak, nonatomic) IBOutlet UILabel *screenNameLabel;
 @property (weak, nonatomic) IBOutlet UILabel *handleLabel;
@@ -60,7 +61,11 @@
 }
 
 - (IBAction)onReply:(id)sender {
-    [self.delegate tweetDetailsController:self didReplyToTweet:self.tweet];
+    ComposeTweetController *ctc = [[ComposeTweetController alloc] init];
+    ctc.replyToTweet = self.tweet;
+    ctc.delegate = self;
+    UINavigationController *nvc = [[UINavigationController alloc] initWithRootViewController:ctc];
+    [self presentViewController:nvc animated:YES completion:nil];
 }
 
 - (IBAction)onRetweet:(id)sender {
@@ -108,6 +113,17 @@
 
 - (void)setTweet:(Tweet *)tweet {
     _tweet = tweet;
+}
+
+- (void)composeTweetController:(ComposeTweetController *)composeTweetController didSendTweet:(NSString *)tweet inReplyToStatusId:(NSInteger)statusId {
+    NSDictionary *params = @{@"in_reply_to_status_id" : @(statusId)};
+    [[TwitterClient sharedInstance] createTweetWithTweet:tweet params:params completion:^(Tweet *tweet, NSError *error) {
+        if (error == nil) {
+            NSLog(@"succesfully replied");
+        } else {
+            NSLog(@"%@", error);
+        }
+    }];
 }
 
 

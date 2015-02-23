@@ -12,6 +12,8 @@
 @class ComposeTweetController;
 
 @protocol ComposeTweetControllerDelegate <NSObject>
+
+@optional
 - (void)composeTweetController:(ComposeTweetController *)composeTweetController didSendTweet:(NSString *)tweet;
 - (void)composeTweetController:(ComposeTweetController *)composeTweetController didSendTweet:(NSString *)tweet inReplyToStatusId:(NSInteger)statusId;
 

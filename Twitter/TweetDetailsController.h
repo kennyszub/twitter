@@ -11,14 +11,7 @@
 
 @class TweetDetailsController;
 
-@protocol TweetDetailsControllerDelegate <NSObject>
-
-- (void)tweetDetailsController:(TweetDetailsController *)detailsController didReplyToTweet:(Tweet *)tweet;
-
-@end
-
 @interface TweetDetailsController : UIViewController
 @property (nonatomic, strong) Tweet *tweet;
-@property (nonatomic, weak) id<TweetDetailsControllerDelegate> delegate;
 
 @end
