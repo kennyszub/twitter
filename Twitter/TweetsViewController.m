@@ -14,8 +14,9 @@
 #import "UIScrollView+SVPullToRefresh.h"
 #import "UIScrollView+SVInfiniteScrolling.h"
 #import "ComposeTweetController.h"
+#import "TweetDetailsController.h"
 
-@interface TweetsViewController () <UITableViewDataSource, UITableViewDelegate, ComposeTweetControllerDelegate, TweetCellDelegate>
+@interface TweetsViewController () <UITableViewDataSource, UITableViewDelegate, ComposeTweetControllerDelegate, TweetCellDelegate, TweetDetailsControllerDelegate>
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (strong, nonatomic) NSMutableArray *tweets;
 
@@ -142,6 +143,14 @@
     [self presentViewController:nvc animated:YES completion:nil];
 }
 
+- (void)tweetDetailsController:(TweetDetailsController *)detailsController didReplyToTweet:(Tweet *)tweet {
+    ComposeTweetController *ctc = [[ComposeTweetController alloc] init];
+    ctc.replyToTweet = tweet;
+    ctc.delegate = self;
+    UINavigationController *nvc = [[UINavigationController alloc] initWithRootViewController:ctc];
+    [self presentViewController:nvc animated:YES completion:nil];
+}
+
 #pragma mark - Table view methods
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
@@ -159,12 +168,13 @@
     return UITableViewAutomaticDimension;
 }
 
-//- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-//    [self.tableView deselectRowAtIndexPath:indexPath animated:YES];
-//    BusinessDetailsController *bc = [[BusinessDetailsController alloc] init];
-//    bc.business = self.businesses[indexPath.row];
-//    [self.navigationController pushViewController:bc animated:YES];
-//}
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    [self.tableView deselectRowAtIndexPath:indexPath animated:YES];
+    TweetDetailsController *tc = [[TweetDetailsController alloc] init];
+    tc.delegate = self;
+    tc.tweet = self.tweets[indexPath.row];
+    [self.navigationController pushViewController:tc animated:YES];
+}
 
 
 @end
