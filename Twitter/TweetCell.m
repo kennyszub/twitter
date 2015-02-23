@@ -10,6 +10,7 @@
 #import "UIImageView+AFNetworking.h"
 #import "DateTools.h"
 #import "TwitterClient.h"
+#import "ComposeTweetController.h"
 
 @interface TweetCell ()
 @property (weak, nonatomic) IBOutlet UIImageView *thumbImageView;
@@ -59,6 +60,10 @@
     
     NSDate *timeAgoDate = [NSDate dateWithTimeIntervalSinceNow:tweet.createdAt.timeIntervalSinceNow];
     self.timestampLabel.text = timeAgoDate.shortTimeAgoSinceNow;
+}
+
+- (IBAction)onReply:(id)sender {
+    [self.delegate tweetCell:self didReplyToTweet:self.tweet];
 }
 
 - (IBAction)onRetweet:(id)sender {

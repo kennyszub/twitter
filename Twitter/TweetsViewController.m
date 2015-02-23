@@ -15,7 +15,7 @@
 #import "UIScrollView+SVInfiniteScrolling.h"
 #import "ComposeTweetController.h"
 
-@interface TweetsViewController () <UITableViewDataSource, UITableViewDelegate, ComposeTweetControllerDelegate>
+@interface TweetsViewController () <UITableViewDataSource, UITableViewDelegate, ComposeTweetControllerDelegate, TweetCellDelegate>
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (strong, nonatomic) NSMutableArray *tweets;
 
@@ -71,6 +71,7 @@
 - (void)onCompose {
     ComposeTweetController *ctc = [[ComposeTweetController alloc] init];
     ctc.delegate = self;
+    ctc.replyToTweet = nil;
     UINavigationController *nvc = [[UINavigationController alloc] initWithRootViewController:ctc];
     [self presentViewController:nvc animated:YES completion:nil];
 }
@@ -106,6 +107,10 @@
     [User logout];
 }
 
+
+
+
+# pragma mark - Delegate methods
 - (void)composeTweetController:(ComposeTweetController *)composeTweetController didSendTweet:(NSString *)tweet {
     [[TwitterClient sharedInstance] createTweetWithTweet:tweet params:nil completion:^(Tweet *tweet, NSError *error) {
         if (error == nil) {
@@ -117,6 +122,26 @@
     }];
 }
 
+- (void)composeTweetController:(ComposeTweetController *)composeTweetController didSendTweet:(NSString *)tweet inReplyToStatusId:(NSInteger)statusId {
+    NSDictionary *params = @{@"in_reply_to_status_id" : @(statusId)};
+    [[TwitterClient sharedInstance] createTweetWithTweet:tweet params:params completion:^(Tweet *tweet, NSError *error) {
+        if (error == nil) {
+            [self.tweets insertObject:tweet atIndex:0];
+            [self.tableView reloadData];
+        } else {
+            NSLog(@"%@", error);
+        }
+    }];
+}
+
+- (void)tweetCell:(TweetCell *)cell didReplyToTweet:(Tweet *)tweet {
+    ComposeTweetController *ctc = [[ComposeTweetController alloc] init];
+    ctc.replyToTweet = tweet;
+    ctc.delegate = self;
+    UINavigationController *nvc = [[UINavigationController alloc] initWithRootViewController:ctc];
+    [self presentViewController:nvc animated:YES completion:nil];
+}
+
 #pragma mark - Table view methods
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
@@ -126,7 +151,7 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     TweetCell *cell = [self.tableView dequeueReusableCellWithIdentifier:@"TweetCell" forIndexPath:indexPath];
     cell.tweet = self.tweets[indexPath.row];
-    
+    cell.delegate = self;
     return cell;
 }
 

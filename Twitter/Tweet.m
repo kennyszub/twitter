@@ -22,6 +22,13 @@
         self.favoritesCount = [dictionary[@"favorite_count"] integerValue];
         self.favorited = [dictionary[@"favorited"] boolValue];
         
+        NSDictionary *retweetedStatus = dictionary[@"retweeted_status"];
+        if (retweetedStatus) {
+            self.retweetedScreenname = retweetedStatus[@"user"][@"screen_name"];
+        } else {
+            self.retweetedScreenname = @"";
+        }
+        
         NSString *createdAtString = dictionary[@"created_at"];
         NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
         formatter.dateFormat = @"EEE MMM d HH:mm:ss Z y";

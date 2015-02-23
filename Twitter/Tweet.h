@@ -20,6 +20,7 @@
 @property (nonatomic, assign) NSInteger favoritesCount;
 @property (nonatomic, assign) BOOL favorited;
 @property (nonatomic, assign) NSInteger retweetId;
+@property (nonatomic, strong) NSString *retweetedScreenname;
 
 
 

@@ -56,6 +56,15 @@
     [self setUpUserViews];
     
     self.textView.delegate = self;
+    
+    if (self.replyToTweet) {
+        self.placeholderText.hidden = YES;
+        if (self.replyToTweet.retweetedScreenname.length > 0) {
+            self.textView.text = [NSString stringWithFormat:@"@%@ @%@ ", self.replyToTweet.user.screenName, self.replyToTweet.retweetedScreenname];
+        } else {
+            self.textView.text = [NSString stringWithFormat:@"@%@ ", self.replyToTweet.user.screenName];
+        }
+    }
 }
 
 
@@ -94,7 +103,11 @@
 }
 
 - (void)onTweetButton {
-    [self.delegate composeTweetController:self didSendTweet:self.textView.text];
+    if (self.replyToTweet) {
+        [self.delegate composeTweetController:self didSendTweet:self.textView.text inReplyToStatusId:self.replyToTweet.tweetId];
+    } else {
+        [self.delegate composeTweetController:self didSendTweet:self.textView.text];
+    }
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
