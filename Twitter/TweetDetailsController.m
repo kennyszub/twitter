@@ -74,6 +74,8 @@
         self.tweet.retweeted = NO;
         self.retweetButton.selected = NO;
         self.tweet.retweetsCount -= 1;
+        
+        // TODO possibly a better way to do this would have been to make TweetsViewController a delegate that listens for favorites/retweets from this class and TweetCell, and makes the network request
         [[TwitterClient sharedInstance] unRetweetTweet:self.tweet.retweetId completion:^(NSError *error) {
             if (error != nil) {
                 NSLog(@"%@", error);

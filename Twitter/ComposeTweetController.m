@@ -18,6 +18,9 @@
 @property (weak, nonatomic) IBOutlet UILabel *handleLabel;
 @property (weak, nonatomic) IBOutlet UILabel *placeholderText;
 @property (weak, nonatomic) IBOutlet UITextView *textView;
+@property (weak, nonatomic) UILabel *charCountLabel;
+@property (weak, nonatomic) UIButton *sendTweetButton;
+
 
 @end
 
@@ -36,16 +39,20 @@
     
     // set up tweet count
     UILabel *headingLabel = [[UILabel alloc] initWithFrame:CGRectZero];
+
     headingLabel.text = @"140";
     headingLabel.font = [UIFont fontWithName:@"HelveticaNeue" size:16];
     headingLabel.textColor = [[UIColor alloc] initWithRed:136/255.0 green:153/255.0 blue:166/255.0 alpha:1.0];
     [headingLabel sizeToFit];
     UIBarButtonItem *countItem = [[UIBarButtonItem alloc] initWithCustomView:headingLabel];
+    self.charCountLabel = headingLabel;
     
     // setup tweet button
     UIButton *tweetButton = [self setUpTweetButton];
     UIBarButtonItem *tweetBarButton = [[UIBarButtonItem alloc] initWithCustomView:tweetButton];
-
+    self.sendTweetButton = tweetButton;
+    self.sendTweetButton.enabled = NO;
+    
     // add to navigation bar
     NSArray *navigationItems = @[tweetBarButton, countItem];
     self.navigationItem.rightBarButtonItems = navigationItems;
@@ -56,6 +63,8 @@
     [self setUpUserViews];
     
     self.textView.delegate = self;
+    // displays keyboard
+    [self.textView becomeFirstResponder];
     
     if (self.replyToTweet) {
         self.placeholderText.hidden = YES;
@@ -112,6 +121,21 @@
 }
 
 - (void)textViewDidChange:(UITextView *)textView {
+    NSInteger textLength = textView.text.length;
+    if (textLength == 0 || textLength > 140) {
+        self.sendTweetButton.enabled = NO;
+    } else {
+        self.sendTweetButton.enabled = YES;
+    }
+    
+    self.charCountLabel.text = [@((NSInteger)(140 - textLength)) stringValue];
+    if (textLength > 139) {
+        self.charCountLabel.textColor = [UIColor redColor];
+    } else {
+        self.charCountLabel.textColor = [[UIColor alloc] initWithRed:136/255.0 green:153/255.0 blue:166/255.0 alpha:1.0];
+    }
+    [self.charCountLabel sizeToFit];
+
     if ([textView hasText]) {
         self.placeholderText.hidden = YES;
     } else {
