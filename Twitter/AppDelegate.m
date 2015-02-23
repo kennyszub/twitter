@@ -26,7 +26,6 @@
     // setup logout observer
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(userDidLogout) name:UserDidLogoutNotification object:nil];
 
-    
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     
     UINavigationController *nvc;
@@ -35,12 +34,12 @@
         NSLog(@"Welcome %@", user.name);
         TweetsViewController *tvc = [[TweetsViewController alloc] init];
         nvc = [[UINavigationController alloc] initWithRootViewController:tvc];
+        self.window.rootViewController = nvc;
     } else {
         NSLog(@"Not logged in");
         LoginViewController *lvc = [[LoginViewController alloc] init];
-        nvc = [[UINavigationController alloc] initWithRootViewController:lvc];
+        self.window.rootViewController = lvc;
     }
-    self.window.rootViewController = nvc;
     [self.window makeKeyAndVisible];
     
     // set navigation bar colors
@@ -55,8 +54,11 @@
 }
 
 - (void)userDidLogout {
-    // TODO with animation
-    self.window.rootViewController = [[LoginViewController alloc] init];
+    [UIView transitionWithView:self.window
+                      duration:0.5
+                       options:UIViewAnimationOptionTransitionFlipFromLeft
+                    animations:^{ self.window.rootViewController = [[LoginViewController alloc] init]; }
+                    completion:nil];
 }
 
 - (void)applicationWillResignActive:(UIApplication *)application {

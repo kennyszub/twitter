@@ -20,7 +20,8 @@
         if (user != nil) {
             // Modally present tweets view
             NSLog(@"welcome to %@", user.name);
-            [self presentViewController:[[TweetsViewController alloc] init] animated:YES completion:nil];
+            UINavigationController *nvc = [[UINavigationController alloc] initWithRootViewController:[[TweetsViewController alloc] init]];
+            [self presentViewController:nvc animated:YES completion:nil];
         } else {
             // present error view
         }
@@ -29,13 +30,17 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    [self.navigationController.navigationBar setBarStyle:UIBarStyleBlack];
+    [self setNeedsStatusBarAppearanceUpdate];
     // Do any additional setup after loading the view from its nib.
 }
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+- (UIStatusBarStyle) preferredStatusBarStyle {
+    return UIStatusBarStyleLightContent;
 }
 
 /*
