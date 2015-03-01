@@ -9,7 +9,6 @@
 #import "MenuCell.h"
 
 @interface MenuCell ()
-@property (weak, nonatomic) IBOutlet UILabel *sectionLabel;
 
 @end
 

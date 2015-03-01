@@ -8,13 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@class MenuCell;
-
-@protocol MenuCellDelegate <NSObject>
-
-- (void)menuCell:(MenuCell *)cell didSelectMenuCellAtIndexPath:(NSIndexPath *)indexPath;
-
-@end
 @interface MenuCell : UITableViewCell
+@property (weak, nonatomic) IBOutlet UILabel *sectionLabel;
 
 @end

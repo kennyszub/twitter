@@ -8,6 +8,16 @@
 
 #import <UIKit/UIKit.h>
 
+@class MenuViewController;
+
+@protocol MenuViewControllerDelegate <NSObject>
+
+- (void)menuViewController:(MenuViewController *)viewController didSelectMenuCellAtIndexPath:(NSIndexPath *)indexPath;
+
+@end
+
 @interface MenuViewController : UIViewController
+
+@property (nonatomic, weak) id<MenuViewControllerDelegate> delegate;
 
 @end

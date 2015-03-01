@@ -28,7 +28,7 @@
             </tableViewCellContentView>
             <inset key="separatorInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
             <connections>
-                <outlet property="sectionLabel" destination="I59-87-VUb" id="7ad-s3-z8P"/>
+                <outlet property="sectionLabel" destination="I59-87-VUb" id="o30-Jw-3m5"/>
             </connections>
             <point key="canvasLocation" x="139" y="177.5"/>
         </tableViewCell>

@@ -36,7 +36,7 @@
     User *user = [User currentUser];
     if (user != nil) {
         NSLog(@"Welcome %@", user.name);
-        TweetsViewController *tvc = [[TweetsViewController alloc] init];
+        TweetsViewController *tvc = [[TweetsViewController alloc] initWithHomeTimeline];
         nvc = [[UINavigationController alloc] initWithRootViewController:tvc];
         cvc = [[ContainerViewController alloc] initWithMenuView:mvc contentView:nvc];
         self.window.rootViewController = cvc;

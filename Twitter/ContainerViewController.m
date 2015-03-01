@@ -8,13 +8,18 @@
 
 #import "ContainerViewController.h"
 #import "MenuViewController.h"
+#import "TweetsViewController.h"
 
-@interface ContainerViewController ()
+@interface ContainerViewController () <MenuViewControllerDelegate>
 @property (nonatomic, assign) CGPoint originalContentCenter;
 @property (nonatomic, assign) CGPoint contentViewRightPosition;
 
 @property (strong, nonatomic) MenuViewController *menuController;
 @property (strong, nonatomic) UINavigationController *contentController;
+
+@property (strong, nonatomic) UINavigationController *profileController;
+@property (strong, nonatomic) UINavigationController *timelineController;
+@property (strong, nonatomic) UINavigationController *mentionsController;
 
 @end
 
@@ -24,7 +29,10 @@
     self = [super init];
     if (self) {
         self.menuController = menuViewController;
+        self.menuController.delegate = self;
         self.contentController = navigationController;
+        self.timelineController = navigationController;
+        self.mentionsController = nil;
     }
     return self;
 }
@@ -90,6 +98,28 @@
 -(UIStatusBarStyle)preferredStatusBarStyle {
     return UIStatusBarStyleLightContent;
 }
+
+- (void)menuViewController:(MenuViewController *)viewController didSelectMenuCellAtIndexPath:(NSIndexPath *)indexPath {
+    switch (indexPath.row) {
+        case 0: // profile
+            break;
+        case 1: // timeline
+            [self.contentController.view addSubview:self.timelineController.view];
+            break;
+        case 2: // mentions
+            if (self.mentionsController == nil) {
+                TweetsViewController *tvc = [[TweetsViewController alloc] initWithMentionsTimeline];
+                UINavigationController *nvc = [[UINavigationController alloc] initWithRootViewController:tvc];
+                self.mentionsController = nvc;
+                self.mentionsController.view.frame = CGRectMake(self.view.frame.origin.x, self.view.frame.origin.y, self.view.frame.size.width, self.view.frame.size.height);
+            }
+            [self.contentController.view addSubview:self.mentionsController.view];
+            break;
+        default:
+            break;
+    }
+}
+
 
 
 @end

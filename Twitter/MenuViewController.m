@@ -11,7 +11,7 @@
 
 @interface MenuViewController () <UITableViewDataSource, UITableViewDelegate>
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
-
+@property (strong, nonatomic) NSArray *sections;
 @end
 
 @implementation MenuViewController
@@ -23,6 +23,8 @@
     self.tableView.dataSource = self;
     [self.tableView registerNib:[UINib nibWithNibName:@"MenuCell" bundle:nil] forCellReuseIdentifier:@"MenuCell"];
     self.tableView.rowHeight = 100;
+    
+    self.sections = [[NSArray alloc] initWithObjects:@"Profile", @"Timeline", @"Mentions", nil];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -34,6 +36,7 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     MenuCell *menuCell = [self.tableView dequeueReusableCellWithIdentifier:@"MenuCell" forIndexPath:indexPath];
+    menuCell.sectionLabel.text = self.sections[indexPath.row];
     return menuCell;
 }
 
@@ -42,6 +45,9 @@
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    [self.tableView deselectRowAtIndexPath:indexPath animated:NO];
+    [self.delegate menuViewController:self didSelectMenuCellAtIndexPath:indexPath];
 }
+
 
 @end

@@ -24,6 +24,28 @@
 
 @implementation TweetsViewController
 
+- (id)initWithHomeTimeline {
+    self = [super self];
+    if (self) {
+        [[TwitterClient sharedInstance] homeTimelineWithParams:nil completion:^(NSMutableArray *tweets, NSError *error) {
+            self.tweets = tweets;
+            [self.tableView reloadData];
+        }];
+    }
+    return self;
+}
+
+- (id)initWithMentionsTimeline {
+    self = [super self];
+    if (self) {
+        [[TwitterClient sharedInstance] mentionsTimelineWithParams:nil completion:^(NSMutableArray *tweets, NSError *error) {
+            self.tweets = tweets;
+            [self.tableView reloadData];
+        }];
+    }
+    return self;
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
@@ -41,10 +63,10 @@
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCompose target:self action:@selector(onCompose)];
     
     // get tweets
-    [[TwitterClient sharedInstance] homeTimelineWithParams:nil completion:^(NSMutableArray *tweets, NSError *error) {
-        self.tweets = tweets;
-        [self.tableView reloadData];
-    }];
+//    [[TwitterClient sharedInstance] homeTimelineWithParams:nil completion:^(NSMutableArray *tweets, NSError *error) {
+//        self.tweets = tweets;
+//        [self.tableView reloadData];
+//    }];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
