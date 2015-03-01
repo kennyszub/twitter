@@ -13,6 +13,7 @@
 #import "Tweet.h"
 #import "TweetsViewController.h"
 #import "ContainerViewController.h"
+#import "MenuViewController.h"
 
 @interface AppDelegate ()
 
@@ -29,29 +30,29 @@
 
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     
-    // temp
-    ContainerViewController *cc = [[ContainerViewController alloc] init];
-    self.window.rootViewController = cc;
-    [self.window makeKeyAndVisible];
-    // end temp
+    ContainerViewController *cvc;
+    MenuViewController *mvc = [[MenuViewController alloc] init];
+    UINavigationController *nvc;
+    User *user = [User currentUser];
+    if (user != nil) {
+        NSLog(@"Welcome %@", user.name);
+        TweetsViewController *tvc = [[TweetsViewController alloc] init];
+        nvc = [[UINavigationController alloc] initWithRootViewController:tvc];
+        cvc = [[ContainerViewController alloc] initWithMenuView:mvc contentView:nvc];
+        self.window.rootViewController = cvc;
+    } else {
+        NSLog(@"Not logged in");
+        LoginViewController *lvc = [[LoginViewController alloc] init];
+        self.window.rootViewController = lvc;
+    }
     
-//    UINavigationController *nvc;
-//    User *user = [User currentUser];
-//    if (user != nil) {
-//        NSLog(@"Welcome %@", user.name);
-//        TweetsViewController *tvc = [[TweetsViewController alloc] init];
-//        nvc = [[UINavigationController alloc] initWithRootViewController:tvc];
-//        self.window.rootViewController = nvc;
-//    } else {
-//        NSLog(@"Not logged in");
-//        LoginViewController *lvc = [[LoginViewController alloc] init];
-//        self.window.rootViewController = lvc;
-//    }
-//    [self.window makeKeyAndVisible];
+    [self.window makeKeyAndVisible];
     
     // set navigation bar colors
     [[UINavigationBar appearance] setBarTintColor:[[UIColor alloc] initWithRed:85/255.0 green:172/255.0 blue:238/255.0 alpha:1.0]];
     [[UINavigationBar appearance] setTintColor:[UIColor whiteColor]];
+    [[UINavigationBar appearance] setTranslucent:NO];
+
     [[UINavigationBar appearance] setTitleTextAttributes:
      [NSDictionary dictionaryWithObjectsAndKeys:
       [UIColor whiteColor], NSForegroundColorAttributeName, nil]];

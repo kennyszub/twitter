@@ -7,7 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "MenuViewController.h"
 
 @interface ContainerViewController : UIViewController
+
+- (id)initWithMenuView:(MenuViewController *)menuViewController contentView:(UINavigationController *)navigationController;
 
 @end

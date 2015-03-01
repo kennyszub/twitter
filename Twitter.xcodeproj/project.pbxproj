@@ -11,6 +11,10 @@
 		C4CF5B6C1A9AB67F00C89D2E /* UIImage+Util.m in Sources */ = {isa = PBXBuildFile; fileRef = C4CF5B6B1A9AB67F00C89D2E /* UIImage+Util.m */; };
 		C4CF5BE11A9F093000C89D2E /* ContainerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C4CF5BDF1A9F093000C89D2E /* ContainerViewController.m */; };
 		C4CF5BE21A9F093000C89D2E /* ContainerViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C4CF5BE01A9F093000C89D2E /* ContainerViewController.xib */; };
+		C4CF5BE61AA2F00D00C89D2E /* MenuViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C4CF5BE41AA2F00D00C89D2E /* MenuViewController.m */; };
+		C4CF5BE71AA2F00D00C89D2E /* MenuViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C4CF5BE51AA2F00D00C89D2E /* MenuViewController.xib */; };
+		C4CF5BEB1AA2FD4C00C89D2E /* MenuCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C4CF5BE91AA2FD4C00C89D2E /* MenuCell.m */; };
+		C4CF5BEC1AA2FD4C00C89D2E /* MenuCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C4CF5BEA1AA2FD4C00C89D2E /* MenuCell.xib */; };
 		C4E836851A965DE200379975 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = C4E836841A965DE200379975 /* main.m */; };
 		C4E836881A965DE200379975 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = C4E836871A965DE200379975 /* AppDelegate.m */; };
 		C4E836901A965DE300379975 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C4E8368F1A965DE300379975 /* Images.xcassets */; };
@@ -48,6 +52,12 @@
 		C4CF5BDE1A9F093000C89D2E /* ContainerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ContainerViewController.h; sourceTree = "<group>"; };
 		C4CF5BDF1A9F093000C89D2E /* ContainerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ContainerViewController.m; sourceTree = "<group>"; };
 		C4CF5BE01A9F093000C89D2E /* ContainerViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ContainerViewController.xib; sourceTree = "<group>"; };
+		C4CF5BE31AA2F00D00C89D2E /* MenuViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MenuViewController.h; sourceTree = "<group>"; };
+		C4CF5BE41AA2F00D00C89D2E /* MenuViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MenuViewController.m; sourceTree = "<group>"; };
+		C4CF5BE51AA2F00D00C89D2E /* MenuViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MenuViewController.xib; sourceTree = "<group>"; };
+		C4CF5BE81AA2FD4C00C89D2E /* MenuCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MenuCell.h; sourceTree = "<group>"; };
+		C4CF5BE91AA2FD4C00C89D2E /* MenuCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MenuCell.m; sourceTree = "<group>"; };
+		C4CF5BEA1AA2FD4C00C89D2E /* MenuCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MenuCell.xib; sourceTree = "<group>"; };
 		C4E8367F1A965DE200379975 /* Twitter.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Twitter.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C4E836831A965DE200379975 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		C4E836841A965DE200379975 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -221,6 +231,9 @@
 				C4CF5BDE1A9F093000C89D2E /* ContainerViewController.h */,
 				C4CF5BDF1A9F093000C89D2E /* ContainerViewController.m */,
 				C4CF5BE01A9F093000C89D2E /* ContainerViewController.xib */,
+				C4CF5BE31AA2F00D00C89D2E /* MenuViewController.h */,
+				C4CF5BE41AA2F00D00C89D2E /* MenuViewController.m */,
+				C4CF5BE51AA2F00D00C89D2E /* MenuViewController.xib */,
 			);
 			name = ViewControllers;
 			sourceTree = "<group>";
@@ -231,6 +244,9 @@
 				C4E837001A99482700379975 /* TweetCell.h */,
 				C4E837011A99482700379975 /* TweetCell.m */,
 				C4E837021A99482700379975 /* TweetCell.xib */,
+				C4CF5BE81AA2FD4C00C89D2E /* MenuCell.h */,
+				C4CF5BE91AA2FD4C00C89D2E /* MenuCell.m */,
+				C4CF5BEA1AA2FD4C00C89D2E /* MenuCell.xib */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -319,8 +335,10 @@
 			files = (
 				C4E837091A99BF7400379975 /* TweetDetailsController.xib in Resources */,
 				C4E8370E1A99CCEA00379975 /* ComposeTweetController.xib in Resources */,
+				C4CF5BEC1AA2FD4C00C89D2E /* MenuCell.xib in Resources */,
 				C4E836FC1A99357A00379975 /* TweetsViewController.xib in Resources */,
 				C4E837041A99482700379975 /* TweetCell.xib in Resources */,
+				C4CF5BE71AA2F00D00C89D2E /* MenuViewController.xib in Resources */,
 				C4E836931A965DE300379975 /* LaunchScreen.xib in Resources */,
 				C4E836901A965DE300379975 /* Images.xcassets in Resources */,
 				C4CF5BE21A9F093000C89D2E /* ContainerViewController.xib in Resources */,
@@ -379,9 +397,11 @@
 				C4CF5B6C1A9AB67F00C89D2E /* UIImage+Util.m in Sources */,
 				C4CF5BE11A9F093000C89D2E /* ContainerViewController.m in Sources */,
 				C4E836881A965DE200379975 /* AppDelegate.m in Sources */,
+				C4CF5BE61AA2F00D00C89D2E /* MenuViewController.m in Sources */,
 				C4E836B61A9717A200379975 /* User.m in Sources */,
 				C4E836B31A97179500379975 /* Tweet.m in Sources */,
 				C4E8370D1A99CCEA00379975 /* ComposeTweetController.m in Sources */,
+				C4CF5BEB1AA2FD4C00C89D2E /* MenuCell.m in Sources */,
 				C4E836851A965DE200379975 /* main.m in Sources */,
 				C4E837081A99BF7400379975 /* TweetDetailsController.m in Sources */,
 				C4E836AB1A970BB300379975 /* LoginViewController.m in Sources */,

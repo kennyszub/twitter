@@ -41,11 +41,10 @@
             <color key="backgroundColor" red="0.33333333333333331" green="0.67450980392156867" blue="0.93333333333333335" alpha="1" colorSpace="calibratedRGB"/>
             <constraints>
                 <constraint firstItem="Df0-Kp-1BT" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="114" id="5zb-dc-2gq"/>
+                <constraint firstAttribute="centerX" secondItem="Df0-Kp-1BT" secondAttribute="centerX" id="74k-dK-ngD"/>
                 <constraint firstItem="sXx-ii-AiG" firstAttribute="top" secondItem="Df0-Kp-1BT" secondAttribute="bottom" constant="154" id="BSd-8y-ban"/>
-                <constraint firstAttribute="trailing" secondItem="Df0-Kp-1BT" secondAttribute="trailing" constant="44" id="Il3-kK-jAP"/>
                 <constraint firstItem="sXx-ii-AiG" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="104" id="S6O-VG-pWs"/>
                 <constraint firstAttribute="trailing" secondItem="sXx-ii-AiG" secondAttribute="trailing" constant="104" id="W52-xF-OWe"/>
-                <constraint firstItem="Df0-Kp-1BT" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="45" id="iQe-AL-IiT"/>
                 <constraint firstItem="sXx-ii-AiG" firstAttribute="top" secondItem="Df0-Kp-1BT" secondAttribute="bottom" constant="154" id="pQO-Vz-W7A"/>
             </constraints>
             <point key="canvasLocation" x="860" y="750"/>
