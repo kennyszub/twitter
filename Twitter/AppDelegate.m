@@ -12,6 +12,7 @@
 #import "User.h"
 #import "Tweet.h"
 #import "TweetsViewController.h"
+#import "ContainerViewController.h"
 
 @interface AppDelegate ()
 
@@ -28,19 +29,25 @@
 
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     
-    UINavigationController *nvc;
-    User *user = [User currentUser];
-    if (user != nil) {
-        NSLog(@"Welcome %@", user.name);
-        TweetsViewController *tvc = [[TweetsViewController alloc] init];
-        nvc = [[UINavigationController alloc] initWithRootViewController:tvc];
-        self.window.rootViewController = nvc;
-    } else {
-        NSLog(@"Not logged in");
-        LoginViewController *lvc = [[LoginViewController alloc] init];
-        self.window.rootViewController = lvc;
-    }
+    // temp
+    ContainerViewController *cc = [[ContainerViewController alloc] init];
+    self.window.rootViewController = cc;
     [self.window makeKeyAndVisible];
+    // end temp
+    
+//    UINavigationController *nvc;
+//    User *user = [User currentUser];
+//    if (user != nil) {
+//        NSLog(@"Welcome %@", user.name);
+//        TweetsViewController *tvc = [[TweetsViewController alloc] init];
+//        nvc = [[UINavigationController alloc] initWithRootViewController:tvc];
+//        self.window.rootViewController = nvc;
+//    } else {
+//        NSLog(@"Not logged in");
+//        LoginViewController *lvc = [[LoginViewController alloc] init];
+//        self.window.rootViewController = lvc;
+//    }
+//    [self.window makeKeyAndVisible];
     
     // set navigation bar colors
     [[UINavigationBar appearance] setBarTintColor:[[UIColor alloc] initWithRed:85/255.0 green:172/255.0 blue:238/255.0 alpha:1.0]];

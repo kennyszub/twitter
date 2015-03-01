@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		82F91AD26E6F261CD041BE34 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D13B5C2ECFBFC8CE2CBD03C5 /* libPods.a */; };
 		C4CF5B6C1A9AB67F00C89D2E /* UIImage+Util.m in Sources */ = {isa = PBXBuildFile; fileRef = C4CF5B6B1A9AB67F00C89D2E /* UIImage+Util.m */; };
+		C4CF5BE11A9F093000C89D2E /* ContainerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C4CF5BDF1A9F093000C89D2E /* ContainerViewController.m */; };
+		C4CF5BE21A9F093000C89D2E /* ContainerViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C4CF5BE01A9F093000C89D2E /* ContainerViewController.xib */; };
 		C4E836851A965DE200379975 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = C4E836841A965DE200379975 /* main.m */; };
 		C4E836881A965DE200379975 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = C4E836871A965DE200379975 /* AppDelegate.m */; };
 		C4E836901A965DE300379975 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C4E8368F1A965DE300379975 /* Images.xcassets */; };
@@ -43,6 +45,9 @@
 		37670910B3B1691022DD7F15 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 		C4CF5B6A1A9AB67F00C89D2E /* UIImage+Util.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+Util.h"; sourceTree = "<group>"; };
 		C4CF5B6B1A9AB67F00C89D2E /* UIImage+Util.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+Util.m"; sourceTree = "<group>"; };
+		C4CF5BDE1A9F093000C89D2E /* ContainerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ContainerViewController.h; sourceTree = "<group>"; };
+		C4CF5BDF1A9F093000C89D2E /* ContainerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ContainerViewController.m; sourceTree = "<group>"; };
+		C4CF5BE01A9F093000C89D2E /* ContainerViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ContainerViewController.xib; sourceTree = "<group>"; };
 		C4E8367F1A965DE200379975 /* Twitter.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Twitter.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C4E836831A965DE200379975 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		C4E836841A965DE200379975 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -213,6 +218,9 @@
 				C4E8370A1A99CCEA00379975 /* ComposeTweetController.h */,
 				C4E8370B1A99CCEA00379975 /* ComposeTweetController.m */,
 				C4E8370C1A99CCEA00379975 /* ComposeTweetController.xib */,
+				C4CF5BDE1A9F093000C89D2E /* ContainerViewController.h */,
+				C4CF5BDF1A9F093000C89D2E /* ContainerViewController.m */,
+				C4CF5BE01A9F093000C89D2E /* ContainerViewController.xib */,
 			);
 			name = ViewControllers;
 			sourceTree = "<group>";
@@ -315,6 +323,7 @@
 				C4E837041A99482700379975 /* TweetCell.xib in Resources */,
 				C4E836931A965DE300379975 /* LaunchScreen.xib in Resources */,
 				C4E836901A965DE300379975 /* Images.xcassets in Resources */,
+				C4CF5BE21A9F093000C89D2E /* ContainerViewController.xib in Resources */,
 				C4E836AC1A970BB300379975 /* LoginViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -368,6 +377,7 @@
 			files = (
 				C4E836AF1A970C7500379975 /* TwitterClient.m in Sources */,
 				C4CF5B6C1A9AB67F00C89D2E /* UIImage+Util.m in Sources */,
+				C4CF5BE11A9F093000C89D2E /* ContainerViewController.m in Sources */,
 				C4E836881A965DE200379975 /* AppDelegate.m in Sources */,
 				C4E836B61A9717A200379975 /* User.m in Sources */,
 				C4E836B31A97179500379975 /* Tweet.m in Sources */,
