@@ -91,6 +91,27 @@ NSString * const kTwitterBaseUrl = @"https://api.twitter.com";
     }];
 }
 
+- (void)userTimelineWithParams:(NSDictionary *)params completion:(void (^)(NSMutableArray *, NSError *))completion {
+    [self GET:@"1.1/statuses/user_timeline.json" parameters:params success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        NSMutableArray *tweets = [Tweet tweetsWithArray:responseObject];
+        completion(tweets, nil);
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        NSLog(@"%@", error);
+        completion(nil, error);
+    }];
+}
+
+- (void)userInfoWithScreenName:(NSString *)screenName completion:(void (^)(User *, NSError *))completion {
+    NSDictionary *params = @{@"screen_name" : screenName};
+    [self GET:@"1.1/users/show.json" parameters:params success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        User *user = [[User alloc] initWithDictionary:responseObject];
+        completion(user, nil);
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        NSLog(@"%@", error);
+        completion(nil, error);
+    }];
+}
+
 - (void)favoriteTweet:(NSInteger)tweetId {
     NSDictionary *params = @{@"id" : @(tweetId)};
     [self POST:@"1.1/favorites/create.json" parameters:params success:^(AFHTTPRequestOperation *operation, id responseObject) {

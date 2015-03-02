@@ -36,6 +36,10 @@
     
     [self.favoritesButton setImage:[UIImage imageNamed:@"favorite_on"] forState:UIControlStateSelected];
     [self.retweetButton setImage:[UIImage imageNamed:@"retweet_on"] forState:UIControlStateSelected];
+    
+    UITapGestureRecognizer *profileTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(onProfileTap)];
+    [self.thumbImageView addGestureRecognizer:profileTap];
+    self.thumbImageView.userInteractionEnabled = YES;
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
@@ -62,6 +66,10 @@
     self.timestampLabel.text = timeAgoDate.shortTimeAgoSinceNow;
 }
 
+- (void)onProfileTap {
+    [self.delegate tweetCell:self didTapUser:self.tweet.user];
+}
+
 - (IBAction)onReply:(id)sender {
     [self.delegate tweetCell:self didReplyToTweet:self.tweet];
 }
@@ -72,6 +80,7 @@
         self.tweet.retweeted = NO;
         self.retweetButton.selected = NO;
         self.tweet.retweetsCount -= 1;
+        // TODO all network requests should be in the model - ie. [self.tweet unRetweet]
         [[TwitterClient sharedInstance] unRetweetTweet:self.tweet.retweetId completion:^(NSError *error) {
             if (error != nil) {
                 NSLog(@"%@", error);

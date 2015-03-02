@@ -1,48 +1,41 @@
 //
-//  TweetsViewController.m
+//  ProfileViewController.m
 //  Twitter
 //
-//  Created by Ken Szubzda on 2/21/15.
+//  Created by Ken Szubzda on 3/1/15.
 //  Copyright (c) 2015 Ken Szubzda. All rights reserved.
 //
 
-#import "TweetsViewController.h"
-#import "User.h"
-#import "TwitterClient.h"
-#import "Tweet.h"
-#import "TweetCell.h"
-#import "UIScrollView+SVPullToRefresh.h"
-#import "UIScrollView+SVInfiniteScrolling.h"
-#import "ComposeTweetController.h"
-#import "TweetDetailsController.h"
 #import "ProfileViewController.h"
+#import "TwitterClient.h"
+#import "TweetCell.h"
+#import "ComposeTweetController.h"
+#import "UIImageView+AFNetworking.h"
+#import "ProfileHeaderCell.h"
+#import "UIScrollView+SVInfiniteScrolling.h"
 
-@interface TweetsViewController () <UITableViewDataSource, UITableViewDelegate, ComposeTweetControllerDelegate, TweetCellDelegate>
+
+const NSInteger kHeaderHeight = 140;
+
+@interface ProfileViewController () <UITableViewDelegate, UITableViewDataSource, TweetCellDelegate, ComposeTweetControllerDelegate>
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (strong, nonatomic) NSMutableArray *tweets;
+@property (strong, nonatomic) User *user;
+
 
 @end
 
-@implementation TweetsViewController
+@implementation ProfileViewController
 
-- (id)initWithHomeTimeline {
-    self = [super self];
+- (id)initWithUser:(User *)user {
+    self = [super init];
     if (self) {
-        [[TwitterClient sharedInstance] homeTimelineWithParams:nil completion:^(NSMutableArray *tweets, NSError *error) {
+        NSDictionary *params = @{@"screen_name" : user.screenName};
+        [[TwitterClient sharedInstance] userTimelineWithParams:params completion:^(NSMutableArray *tweets, NSError *error) {
             self.tweets = tweets;
             [self.tableView reloadData];
         }];
-    }
-    return self;
-}
-
-- (id)initWithMentionsTimeline {
-    self = [super self];
-    if (self) {
-        [[TwitterClient sharedInstance] mentionsTimelineWithParams:nil completion:^(NSMutableArray *tweets, NSError *error) {
-            self.tweets = tweets;
-            [self.tableView reloadData];
-        }];
+        self.user = user;
     }
     return self;
 }
@@ -50,39 +43,40 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
-    
-    // setup tableview
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
+    [self.tableView registerNib:[UINib nibWithNibName:@"ProfileHeaderCell" bundle:nil] forCellReuseIdentifier:@"ProfileHeaderCell"];
     [self.tableView registerNib:[UINib nibWithNibName:@"TweetCell" bundle:nil] forCellReuseIdentifier:@"TweetCell"];
     self.tableView.rowHeight = UITableViewAutomaticDimension;
     
     // setup nav bar
     [self.navigationController.navigationBar setBarStyle:UIBarStyleBlack];
-    self.navigationItem.title = @"Home";
-    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"hamburger"] style:UIBarButtonItemStyleDone target:self action:@selector(onHamburgerTap)];
+    self.navigationItem.title = self.user.name;
+    
+    if (self.user == [User currentUser]) {
+        self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"hamburger"] style:UIBarButtonItemStyleDone target:self action:@selector(onHamburgerTap)];
+    }
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCompose target:self action:@selector(onCompose)];
-}
-
-- (void)viewDidAppear:(BOOL)animated {
-    [super viewDidAppear:animated];
-
-    [self.tableView addPullToRefreshWithActionHandler:^{
-        [self onRefresh];
-        [self.tableView.pullToRefreshView stopAnimating];
-    }];
     
     [self.tableView addInfiniteScrollingWithActionHandler:^{
         [self onInfiniteScroll];
     }];
 }
 
+- (void)viewDidLayoutSubviews {
+    [super viewDidLayoutSubviews];
+    UIImageView *headerImage = [[UIImageView alloc] initWithFrame:CGRectMake(0, -kHeaderHeight, self.tableView.frame.size.width, kHeaderHeight)];
+    [headerImage setImageWithURL:[NSURL URLWithString:self.user.profileBackgroundImageUrl]];
+    [self.tableView insertSubview:headerImage atIndex:0];
+    
+    self.tableView.contentInset = UIEdgeInsetsMake(kHeaderHeight, 0, 0, 0);
+    self.tableView.contentOffset = CGPointMake(0, -kHeaderHeight);
+}
+
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
-
-
 
 #pragma mark - Private methods
 
@@ -97,22 +91,22 @@
 - (void)onRefresh {
     Tweet *newestTweet = self.tweets[0];
     NSDictionary *params = [NSDictionary dictionaryWithObject:@(newestTweet.tweetId) forKey:@"since_id"];
-
+    
     [[TwitterClient sharedInstance] homeTimelineWithParams:params completion:^(NSMutableArray *tweets, NSError *error) {
         if (tweets && tweets.count > 0) {
             NSIndexSet *indexes = [NSIndexSet indexSetWithIndexesInRange:NSMakeRange(0, tweets.count)];
             [self.tweets insertObjects:tweets atIndexes:indexes];
             [self.tableView reloadData];
-        }        
+        }
     }];
 }
 
 - (void)onInfiniteScroll {
     Tweet *oldestTweet = self.tweets[self.tweets.count - 1];
     
-    NSDictionary *params = [NSDictionary dictionaryWithObject:@(oldestTweet.tweetId - 1) forKey:@"max_id"];
-
-    [[TwitterClient sharedInstance] homeTimelineWithParams:params completion:^(NSMutableArray *tweets, NSError *error) {
+    NSDictionary *params = @{@"max_id" : @(oldestTweet.tweetId - 1),
+                             @"screen_name" : self.user.screenName};
+    [[TwitterClient sharedInstance] userTimelineWithParams:params completion:^(NSMutableArray *tweets, NSError *error) {
         if (tweets && tweets.count > 0) {
             [self.tweets addObjectsFromArray:tweets];
             [self.tableView reloadData];
@@ -121,12 +115,11 @@
     }];
 }
 
+
 - (void)onHamburgerTap {
     [[NSNotificationCenter defaultCenter] postNotificationName:@"UserDidTapHamburger" object:nil];
+
 }
-
-
-
 
 # pragma mark - Delegate methods
 - (void)composeTweetController:(ComposeTweetController *)composeTweetController didSendTweet:(NSString *)tweet {
@@ -161,33 +154,39 @@
 }
 
 - (void)tweetCell:(TweetCell *)cell didTapUser:(User *)user {
-    ProfileViewController *pvc = [[ProfileViewController alloc] initWithUser:user];
-    [self.navigationController pushViewController:pvc animated:YES];
+    if (![user.screenName isEqualToString: self.user.screenName]) {
+        ProfileViewController *pvc = [[ProfileViewController alloc] initWithUser:user];
+        [self.navigationController pushViewController:pvc animated:YES];
+    }
 }
 
-#pragma mark - Table view methods
+#pragma mark Table view methods
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    ProfileHeaderCell *profileHeaderCell;
+    TweetCell *cell;
+    switch (indexPath.row) {
+        case 0:
+            profileHeaderCell = [self.tableView dequeueReusableCellWithIdentifier:@"ProfileHeaderCell" forIndexPath:indexPath];
+            profileHeaderCell.user = self.user;
+            return profileHeaderCell;
+        default:
+            cell = [self.tableView dequeueReusableCellWithIdentifier:@"TweetCell" forIndexPath:indexPath];
+            cell.tweet = self.tweets[indexPath.row - 1]; // offset the profile header cell
+            cell.delegate = self;
+            return cell;
+    }
+}
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     return self.tweets.count;
 }
 
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    TweetCell *cell = [self.tableView dequeueReusableCellWithIdentifier:@"TweetCell" forIndexPath:indexPath];
-    cell.tweet = self.tweets[indexPath.row];
-    cell.delegate = self;
-    return cell;
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
 }
 
 - (CGFloat)tableView:(UITableView *)tableView estimatedHeightForRowAtIndexPath:(NSIndexPath *)indexPath {
     return UITableViewAutomaticDimension;
 }
-
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    [self.tableView deselectRowAtIndexPath:indexPath animated:YES];
-    TweetDetailsController *tc = [[TweetDetailsController alloc] init];
-    tc.tweet = self.tweets[indexPath.row];
-    [self.navigationController pushViewController:tc animated:YES];
-}
-
 
 @end

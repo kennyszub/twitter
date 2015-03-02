@@ -15,6 +15,10 @@
 		C4CF5BE71AA2F00D00C89D2E /* MenuViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C4CF5BE51AA2F00D00C89D2E /* MenuViewController.xib */; };
 		C4CF5BEB1AA2FD4C00C89D2E /* MenuCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C4CF5BE91AA2FD4C00C89D2E /* MenuCell.m */; };
 		C4CF5BEC1AA2FD4C00C89D2E /* MenuCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C4CF5BEA1AA2FD4C00C89D2E /* MenuCell.xib */; };
+		C4CF5BF01AA3D4E000C89D2E /* ProfileViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C4CF5BEE1AA3D4E000C89D2E /* ProfileViewController.m */; };
+		C4CF5BF11AA3D4E000C89D2E /* ProfileViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C4CF5BEF1AA3D4E000C89D2E /* ProfileViewController.xib */; };
+		C4CF5BF51AA3D97400C89D2E /* ProfileHeaderCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C4CF5BF31AA3D97400C89D2E /* ProfileHeaderCell.m */; };
+		C4CF5BF61AA3D97400C89D2E /* ProfileHeaderCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C4CF5BF41AA3D97400C89D2E /* ProfileHeaderCell.xib */; };
 		C4E836851A965DE200379975 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = C4E836841A965DE200379975 /* main.m */; };
 		C4E836881A965DE200379975 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = C4E836871A965DE200379975 /* AppDelegate.m */; };
 		C4E836901A965DE300379975 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C4E8368F1A965DE300379975 /* Images.xcassets */; };
@@ -58,6 +62,12 @@
 		C4CF5BE81AA2FD4C00C89D2E /* MenuCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MenuCell.h; sourceTree = "<group>"; };
 		C4CF5BE91AA2FD4C00C89D2E /* MenuCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MenuCell.m; sourceTree = "<group>"; };
 		C4CF5BEA1AA2FD4C00C89D2E /* MenuCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MenuCell.xib; sourceTree = "<group>"; };
+		C4CF5BED1AA3D4E000C89D2E /* ProfileViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProfileViewController.h; sourceTree = "<group>"; };
+		C4CF5BEE1AA3D4E000C89D2E /* ProfileViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProfileViewController.m; sourceTree = "<group>"; };
+		C4CF5BEF1AA3D4E000C89D2E /* ProfileViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ProfileViewController.xib; sourceTree = "<group>"; };
+		C4CF5BF21AA3D97400C89D2E /* ProfileHeaderCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProfileHeaderCell.h; sourceTree = "<group>"; };
+		C4CF5BF31AA3D97400C89D2E /* ProfileHeaderCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProfileHeaderCell.m; sourceTree = "<group>"; };
+		C4CF5BF41AA3D97400C89D2E /* ProfileHeaderCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ProfileHeaderCell.xib; sourceTree = "<group>"; };
 		C4E8367F1A965DE200379975 /* Twitter.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Twitter.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C4E836831A965DE200379975 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		C4E836841A965DE200379975 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -234,6 +244,9 @@
 				C4CF5BE31AA2F00D00C89D2E /* MenuViewController.h */,
 				C4CF5BE41AA2F00D00C89D2E /* MenuViewController.m */,
 				C4CF5BE51AA2F00D00C89D2E /* MenuViewController.xib */,
+				C4CF5BED1AA3D4E000C89D2E /* ProfileViewController.h */,
+				C4CF5BEE1AA3D4E000C89D2E /* ProfileViewController.m */,
+				C4CF5BEF1AA3D4E000C89D2E /* ProfileViewController.xib */,
 			);
 			name = ViewControllers;
 			sourceTree = "<group>";
@@ -247,6 +260,9 @@
 				C4CF5BE81AA2FD4C00C89D2E /* MenuCell.h */,
 				C4CF5BE91AA2FD4C00C89D2E /* MenuCell.m */,
 				C4CF5BEA1AA2FD4C00C89D2E /* MenuCell.xib */,
+				C4CF5BF21AA3D97400C89D2E /* ProfileHeaderCell.h */,
+				C4CF5BF31AA3D97400C89D2E /* ProfileHeaderCell.m */,
+				C4CF5BF41AA3D97400C89D2E /* ProfileHeaderCell.xib */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -333,11 +349,13 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C4CF5BF61AA3D97400C89D2E /* ProfileHeaderCell.xib in Resources */,
 				C4E837091A99BF7400379975 /* TweetDetailsController.xib in Resources */,
 				C4E8370E1A99CCEA00379975 /* ComposeTweetController.xib in Resources */,
 				C4CF5BEC1AA2FD4C00C89D2E /* MenuCell.xib in Resources */,
 				C4E836FC1A99357A00379975 /* TweetsViewController.xib in Resources */,
 				C4E837041A99482700379975 /* TweetCell.xib in Resources */,
+				C4CF5BF11AA3D4E000C89D2E /* ProfileViewController.xib in Resources */,
 				C4CF5BE71AA2F00D00C89D2E /* MenuViewController.xib in Resources */,
 				C4E836931A965DE300379975 /* LaunchScreen.xib in Resources */,
 				C4E836901A965DE300379975 /* Images.xcassets in Resources */,
@@ -397,9 +415,11 @@
 				C4CF5B6C1A9AB67F00C89D2E /* UIImage+Util.m in Sources */,
 				C4CF5BE11A9F093000C89D2E /* ContainerViewController.m in Sources */,
 				C4E836881A965DE200379975 /* AppDelegate.m in Sources */,
+				C4CF5BF01AA3D4E000C89D2E /* ProfileViewController.m in Sources */,
 				C4CF5BE61AA2F00D00C89D2E /* MenuViewController.m in Sources */,
 				C4E836B61A9717A200379975 /* User.m in Sources */,
 				C4E836B31A97179500379975 /* Tweet.m in Sources */,
+				C4CF5BF51AA3D97400C89D2E /* ProfileHeaderCell.m in Sources */,
 				C4E8370D1A99CCEA00379975 /* ComposeTweetController.m in Sources */,
 				C4CF5BEB1AA2FD4C00C89D2E /* MenuCell.m in Sources */,
 				C4E836851A965DE200379975 /* main.m in Sources */,

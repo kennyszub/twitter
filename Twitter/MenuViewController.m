@@ -24,7 +24,7 @@
     [self.tableView registerNib:[UINib nibWithNibName:@"MenuCell" bundle:nil] forCellReuseIdentifier:@"MenuCell"];
     self.tableView.rowHeight = 100;
     
-    self.sections = [[NSArray alloc] initWithObjects:@"Profile", @"Timeline", @"Mentions", nil];
+    self.sections = [[NSArray alloc] initWithObjects:@"Profile", @"Timeline", @"Mentions", @"Sign Out", nil];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -41,7 +41,7 @@
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return 3;
+    return 4;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {

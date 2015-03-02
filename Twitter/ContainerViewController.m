@@ -9,13 +9,18 @@
 #import "ContainerViewController.h"
 #import "MenuViewController.h"
 #import "TweetsViewController.h"
+#import "ProfileViewController.h"
+#import "User.h"
+
+NSString * const UserDidTapHamburger = @"UserDidTapHamburger";
+
 
 @interface ContainerViewController () <MenuViewControllerDelegate>
 @property (nonatomic, assign) CGPoint originalContentCenter;
 @property (nonatomic, assign) CGPoint contentViewRightPosition;
 
 @property (strong, nonatomic) MenuViewController *menuController;
-@property (strong, nonatomic) UINavigationController *contentController;
+@property (strong, nonatomic) UIView *contentView;
 
 @property (strong, nonatomic) UINavigationController *profileController;
 @property (strong, nonatomic) UINavigationController *timelineController;
@@ -28,11 +33,16 @@
 - (id)initWithMenuView:(MenuViewController *)menuViewController contentView:(UINavigationController *)navigationController {
     self = [super init];
     if (self) {
+        // initialize container view
+        self.contentView = [[UIView alloc] init];
+        // set menu controller
         self.menuController = menuViewController;
         self.menuController.delegate = self;
-        self.contentController = navigationController;
+        // initialize timeline and mentions view controllers
         self.timelineController = navigationController;
         self.mentionsController = nil;
+        
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(userDidTapHamburger) name:UserDidTapHamburger object:nil];
     }
     return self;
 }
@@ -46,7 +56,7 @@
     // add pan gesture for hamburger
     UIPanGestureRecognizer *panGesture = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(onPanGesture:)];
     [self.view addSubview:self.menuController.view];
-    [self.view addSubview:self.contentController.view];
+    [self.view addSubview:self.contentView];
     [self.view addGestureRecognizer:panGesture];
 
 }
@@ -59,11 +69,16 @@
 - (void)viewDidLayoutSubviews {
     [super viewDidLayoutSubviews];
     [self addChildViewController:self.menuController];
-    [self addChildViewController:self.contentController];
+    [self addChildViewController:self.timelineController];
+    
     self.menuController.view.frame = CGRectMake(self.view.frame.origin.x, self.view.frame.origin.y, self.view.frame.size.width * 0.75, self.view.frame.size.height);
-    self.contentController.view.frame = CGRectMake(self.view.frame.origin.x, self.view.frame.origin.y, self.view.frame.size.width, self.view.frame.size.height);
+    self.contentView.frame = CGRectMake(self.view.frame.origin.x, self.view.frame.origin.y, self.view.frame.size.width, self.view.frame.size.height);
+    
+    // show timeline controller
+    [self.contentView addSubview:self.timelineController.view];
+    
     [self.menuController didMoveToParentViewController:self];
-    [self.contentController didMoveToParentViewController:self];
+    [self.timelineController didMoveToParentViewController:self];
 }
 
 
@@ -74,20 +89,20 @@
 
 - (void)onPanGesture:(UIPanGestureRecognizer *)sender {
     if (sender.state == UIGestureRecognizerStateBegan) {
-        self.originalContentCenter = self.contentController.view.center;
+        self.originalContentCenter = self.contentView.center;
     } else if (sender.state == UIGestureRecognizerStateChanged) {
         double newCenterX = self.originalContentCenter.x + [sender translationInView:self.view].x;
         if ((newCenterX <= self.contentViewRightPosition.x) && (newCenterX >= self.view.center.x)) {
-            self.contentController.view.center = CGPointMake(newCenterX, self.originalContentCenter.y);
+            self.contentView.center = CGPointMake(newCenterX, self.originalContentCenter.y);
         }
     } else if (sender.state == UIGestureRecognizerStateEnded) {
         CGPoint velocity = [sender velocityInView:self.view];
         [UIView animateWithDuration:0.4 animations:^{
             if (velocity.x > 0) {
                 // going right
-                self.contentController.view.center = self.contentViewRightPosition;
+                self.contentView.center = self.contentViewRightPosition;
             } else {
-                self.contentController.view.center = self.view.center;
+                self.contentView.center = self.view.center;
             }
         } completion:^(BOOL finished) {
             
@@ -100,24 +115,50 @@
 }
 
 - (void)menuViewController:(MenuViewController *)viewController didSelectMenuCellAtIndexPath:(NSIndexPath *)indexPath {
+    [UIView animateWithDuration:0.4 animations:^{
+        self.contentView.center = self.view.center;
+    }];
     switch (indexPath.row) {
         case 0: // profile
+            if (self.profileController == nil) {
+                ProfileViewController *pvc = [[ProfileViewController alloc] initWithUser:[User currentUser]];
+                UINavigationController *nvc = [[UINavigationController alloc] initWithRootViewController:pvc];
+                self.profileController = nvc;
+                
+                [self addChildViewController:self.profileController];
+                self.profileController.view.frame = CGRectMake(self.view.frame.origin.x, self.view.frame.origin.y, self.view.frame.size.width, self.view.frame.size.height);
+                [self.profileController didMoveToParentViewController:self];
+            }
+            [self.contentView addSubview:self.profileController.view];
             break;
         case 1: // timeline
-            [self.contentController.view addSubview:self.timelineController.view];
+            [self.contentView addSubview:self.timelineController.view];
             break;
         case 2: // mentions
             if (self.mentionsController == nil) {
                 TweetsViewController *tvc = [[TweetsViewController alloc] initWithMentionsTimeline];
                 UINavigationController *nvc = [[UINavigationController alloc] initWithRootViewController:tvc];
                 self.mentionsController = nvc;
+                
+                [self addChildViewController:self.mentionsController];
                 self.mentionsController.view.frame = CGRectMake(self.view.frame.origin.x, self.view.frame.origin.y, self.view.frame.size.width, self.view.frame.size.height);
+                [self.mentionsController didMoveToParentViewController:self];
             }
-            [self.contentController.view addSubview:self.mentionsController.view];
+            [self.contentView addSubview:self.mentionsController.view];
+            break;
+        case 3: // sign out
+            [User logout];
             break;
         default:
             break;
     }
+}
+
+- (void)userDidTapHamburger {
+    [UIView animateWithDuration:0.4 animations:^{
+        self.contentView.center = self.contentViewRightPosition;
+    }];
+
 }
 
 
