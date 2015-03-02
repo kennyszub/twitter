@@ -64,8 +64,8 @@ const NSInteger kHeaderHeight = 140;
     }];
 }
 
-- (void)viewDidLayoutSubviews {
-    [super viewDidLayoutSubviews];
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
     UIImageView *headerImage = [[UIImageView alloc] initWithFrame:CGRectMake(0, -kHeaderHeight, self.tableView.frame.size.width, kHeaderHeight)];
     [headerImage setImageWithURL:[NSURL URLWithString:self.user.profileBackgroundImageUrl]];
     headerImage.contentMode = UIViewContentModeScaleAspectFill;

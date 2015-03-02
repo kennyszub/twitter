@@ -20,7 +20,7 @@ NSString * const UserDidTapHamburger = @"UserDidTapHamburger";
 @property (nonatomic, assign) CGPoint contentViewRightPosition;
 
 @property (strong, nonatomic) MenuViewController *menuController;
-@property (strong, nonatomic) UIView *contentView;
+@property (strong, nonatomic) UIView *contentView; // TODO maybe this should be a UINavigationController
 
 @property (strong, nonatomic) UINavigationController *profileController;
 @property (strong, nonatomic) UINavigationController *timelineController;
@@ -125,7 +125,8 @@ NSString * const UserDidTapHamburger = @"UserDidTapHamburger";
                 UINavigationController *nvc = [[UINavigationController alloc] initWithRootViewController:pvc];
                 self.profileController = nvc;
                 
-                [self addChildViewController:self.profileController];
+//                [self addChildViewController:self.profileController];
+                
                 self.profileController.view.frame = CGRectMake(self.view.frame.origin.x, self.view.frame.origin.y, self.view.frame.size.width, self.view.frame.size.height);
                 [self.profileController didMoveToParentViewController:self];
             }
