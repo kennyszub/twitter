@@ -42,9 +42,11 @@
     [self.thumbImageView setImageWithURL:[NSURL URLWithString:user.profileImageUrl]];
     self.nameLabel.text = user.name;
     self.handleLabel.text = [NSString stringWithFormat:@"@%@", user.screenName];
-    self.numberTweetsLabel.text = [NSString stringWithFormat:@"%ld", user.numberTweets];
-    self.numberFollowingLabel.text = [NSString stringWithFormat:@"%ld", user.numberFollowing];
-    self.numberFollowersLabel.text = [NSString stringWithFormat:@"%ld", user.numberFollowers];
+    NSNumberFormatter *formatter = [[NSNumberFormatter alloc] init];
+    [formatter setNumberStyle:NSNumberFormatterDecimalStyle];
+    self.numberTweetsLabel.text = [formatter stringFromNumber:[NSNumber numberWithInteger:user.numberTweets]];
+    self.numberFollowingLabel.text = [formatter stringFromNumber:[NSNumber numberWithInteger:user.numberFollowing]];
+    self.numberFollowersLabel.text = [formatter stringFromNumber:[NSNumber numberWithInteger:user.numberFollowers]];
 }
 
 @end

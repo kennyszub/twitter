@@ -115,13 +115,25 @@
     
     NSDictionary *params = [NSDictionary dictionaryWithObject:@(oldestTweet.tweetId - 1) forKey:@"max_id"];
 
-    [[TwitterClient sharedInstance] homeTimelineWithParams:params completion:^(NSMutableArray *tweets, NSError *error) {
-        if (tweets && tweets.count > 0) {
-            [self.tweets addObjectsFromArray:tweets];
-            [self.tableView reloadData];
-        }
-        [self.tableView.infiniteScrollingView stopAnimating];
-    }];
+    // TODO do this in a better way
+    if ([self.title isEqualToString:@"Home"]) {
+        [[TwitterClient sharedInstance] homeTimelineWithParams:params completion:^(NSMutableArray *tweets, NSError *error) {
+            if (tweets && tweets.count > 0) {
+                [self.tweets addObjectsFromArray:tweets];
+                [self.tableView reloadData];
+            }
+            [self.tableView.infiniteScrollingView stopAnimating];
+        }];
+    } else {
+        [[TwitterClient sharedInstance] mentionsTimelineWithParams:params completion:^(NSMutableArray *tweets, NSError *error) {
+            if (tweets && tweets.count > 0) {
+                [self.tweets addObjectsFromArray:tweets];
+                [self.tableView reloadData];
+            }
+            [self.tableView.infiniteScrollingView stopAnimating];
+        }];
+    }
+
 }
 
 - (void)onHamburgerTap {

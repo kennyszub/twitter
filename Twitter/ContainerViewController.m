@@ -124,9 +124,7 @@ NSString * const UserDidTapHamburger = @"UserDidTapHamburger";
                 ProfileViewController *pvc = [[ProfileViewController alloc] initWithUser:[User currentUser]];
                 UINavigationController *nvc = [[UINavigationController alloc] initWithRootViewController:pvc];
                 self.profileController = nvc;
-                
-//                [self addChildViewController:self.profileController];
-                
+                [self addChildViewController:self.profileController];
                 self.profileController.view.frame = CGRectMake(self.view.frame.origin.x, self.view.frame.origin.y, self.view.frame.size.width, self.view.frame.size.height);
                 [self.profileController didMoveToParentViewController:self];
             }
