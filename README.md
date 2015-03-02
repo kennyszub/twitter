@@ -2,6 +2,35 @@
 
 This is a basic twitter app to read and compose tweets the [Twitter API](https://apps.twitter.com/).
 
+### Part 2
+Time spent: `<11>`
+
+### Features
+
+#### Required
+
+- [x] Hamburger Menu - dragging anywhere in the view should reveal the menu
+- [x] Hamburger Menu - should include links to your profile, the home timeline, and the mentions view
+- [x] Hamburger Menu - similar idea to LinkedIn menu
+- [x] Profile Page - contains the user header view
+- [x] Profile Page - Contains a section with the user's basic stats - # tweets, # following, # followers
+- [x] Home Timeline - tapping on a user image should bring up that user's profile page
+
+#### Optional
+
+- [x] Pulling down the profile page should blur and resize the header image. (resize only)
+- [] Implement the paging view for the user description.
+- [] As the paging view moves, increase the opacity of the background screen. See the actual Twitter app for this effect
+- [] Account switching - Long press on tab bar to bring up Account view with animation
+- [] Account switching - Tap account to switch to
+- [] Account switching - Include a plus button to Add an Account
+- [] Account switching - Swipe to delete an account
+
+### Walkthrough
+
+![Video Walkthrough](twitter2.gif)
+
+### Part 1
 Time spent: `<17>`
 
 ### Features
