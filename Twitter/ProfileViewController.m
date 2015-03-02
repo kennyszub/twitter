@@ -13,15 +13,16 @@
 #import "UIImageView+AFNetworking.h"
 #import "ProfileHeaderCell.h"
 #import "UIScrollView+SVInfiniteScrolling.h"
+#import "TweetDetailsController.h"
 
 
 const NSInteger kHeaderHeight = 140;
 
-@interface ProfileViewController () <UITableViewDelegate, UITableViewDataSource, TweetCellDelegate, ComposeTweetControllerDelegate>
+@interface ProfileViewController () <UITableViewDelegate, UITableViewDataSource, TweetCellDelegate, ComposeTweetControllerDelegate, UIScrollViewDelegate>
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (strong, nonatomic) NSMutableArray *tweets;
 @property (strong, nonatomic) User *user;
-
+@property (strong, nonatomic) UIImageView *headerImage;
 
 @end
 
@@ -67,6 +68,8 @@ const NSInteger kHeaderHeight = 140;
     [super viewDidLayoutSubviews];
     UIImageView *headerImage = [[UIImageView alloc] initWithFrame:CGRectMake(0, -kHeaderHeight, self.tableView.frame.size.width, kHeaderHeight)];
     [headerImage setImageWithURL:[NSURL URLWithString:self.user.profileBackgroundImageUrl]];
+    headerImage.contentMode = UIViewContentModeScaleAspectFill;
+    self.headerImage = headerImage;
     [self.tableView insertSubview:headerImage atIndex:0];
     
     self.tableView.contentInset = UIEdgeInsetsMake(kHeaderHeight, 0, 0, 0);
@@ -121,7 +124,21 @@ const NSInteger kHeaderHeight = 140;
 
 }
 
+- (void)updateHeaderView {
+    CGRect headerRect = CGRectMake(0, -kHeaderHeight, self.tableView.bounds.size.width, kHeaderHeight);
+    if (self.tableView.contentOffset.y < -kHeaderHeight) {
+        headerRect.origin.y = self.tableView.contentOffset.y;
+        headerRect.size.height = - self.tableView.contentOffset.y;
+    }
+    
+    self.headerImage.frame = headerRect;
+}
+
 # pragma mark - Delegate methods
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
+    [self updateHeaderView];
+}
+
 - (void)composeTweetController:(ComposeTweetController *)composeTweetController didSendTweet:(NSString *)tweet {
     [[TwitterClient sharedInstance] createTweetWithTweet:tweet params:nil completion:^(Tweet *tweet, NSError *error) {
         if (error == nil) {
@@ -183,7 +200,12 @@ const NSInteger kHeaderHeight = 140;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    [self.tableView deselectRowAtIndexPath:indexPath animated:YES];
+    TweetDetailsController *tc = [[TweetDetailsController alloc] init];
+    tc.tweet = self.tweets[indexPath.row];
+    [self.navigationController pushViewController:tc animated:YES];
 }
+
 
 - (CGFloat)tableView:(UITableView *)tableView estimatedHeightForRowAtIndexPath:(NSIndexPath *)indexPath {
     return UITableViewAutomaticDimension;

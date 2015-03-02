@@ -20,6 +20,7 @@
 @interface TweetsViewController () <UITableViewDataSource, UITableViewDelegate, ComposeTweetControllerDelegate, TweetCellDelegate>
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (strong, nonatomic) NSMutableArray *tweets;
+@property (strong, nonatomic) NSString *title;
 
 @end
 
@@ -32,6 +33,7 @@
             self.tweets = tweets;
             [self.tableView reloadData];
         }];
+        self.title = @"Home";
     }
     return self;
 }
@@ -43,6 +45,7 @@
             self.tweets = tweets;
             [self.tableView reloadData];
         }];
+        self.title = @"Mentions";
     }
     return self;
 }
@@ -59,7 +62,7 @@
     
     // setup nav bar
     [self.navigationController.navigationBar setBarStyle:UIBarStyleBlack];
-    self.navigationItem.title = @"Home";
+    self.navigationItem.title = self.title;
     self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"hamburger"] style:UIBarButtonItemStyleDone target:self action:@selector(onHamburgerTap)];
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCompose target:self action:@selector(onCompose)];
 }

@@ -39,7 +39,6 @@
         TweetsViewController *tvc = [[TweetsViewController alloc] initWithHomeTimeline];
         nvc = [[UINavigationController alloc] initWithRootViewController:tvc];
         cvc = [[ContainerViewController alloc] initWithMenuView:mvc contentView:nvc];
-//        tvc.delegate = cvc;
         self.window.rootViewController = cvc;
     } else {
         NSLog(@"Not logged in");

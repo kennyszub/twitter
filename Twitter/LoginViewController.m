@@ -20,7 +20,8 @@
         if (user != nil) {
             // Modally present tweets view
             NSLog(@"welcome to %@", user.name);
-            UINavigationController *nvc = [[UINavigationController alloc] initWithRootViewController:[[TweetsViewController alloc] init]];
+            TweetsViewController *tvc = [[TweetsViewController alloc] initWithHomeTimeline];
+            UINavigationController *nvc = [[UINavigationController alloc] initWithRootViewController:tvc];
             [self presentViewController:nvc animated:YES completion:nil];
         } else {
             // present error view
