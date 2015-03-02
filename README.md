@@ -19,12 +19,12 @@ Time spent: `<11>`
 #### Optional
 
 - [x] Pulling down the profile page should blur and resize the header image. (resize only)
-- [] Implement the paging view for the user description.
-- [] As the paging view moves, increase the opacity of the background screen. See the actual Twitter app for this effect
-- [] Account switching - Long press on tab bar to bring up Account view with animation
-- [] Account switching - Tap account to switch to
-- [] Account switching - Include a plus button to Add an Account
-- [] Account switching - Swipe to delete an account
+- [ ] Implement the paging view for the user description.
+- [ ] As the paging view moves, increase the opacity of the background screen. See the actual Twitter app for this effect
+- [ ] Account switching - Long press on tab bar to bring up Account view with animation
+- [ ] Account switching - Tap account to switch to
+- [ ] Account switching - Include a plus button to Add an Account
+- [ ] Account switching - Swipe to delete an account
 
 ### Walkthrough
 
